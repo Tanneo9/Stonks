@@ -9,9 +9,9 @@ class StockManger:
         while low <= high:
             mid = (low + high) // 2
             guess = self.itemList[mid]
-            if search_term in guess.name:
+            if search_term.lower() in guess.name.lower():
                 return self.itemList[mid]
-            if guess.name > search_term:
+            if guess.name.lower() > search_term.lower():
                 high = mid - 1
             else:
                 low = mid + 1
@@ -36,4 +36,4 @@ s = StockManger()
 s.itemList.append(Item("Chad Juice", 1))
 s.itemList.append(Item("Chud Juice", 2))
 s.itemList.append(Item("Sigma Juice", 3))
-print(s.search("Cha").name)
+print(s.search("cha").name)
