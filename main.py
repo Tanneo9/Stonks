@@ -1,4 +1,4 @@
-import sys
+import statistics
 
 
 class StockManger:
@@ -56,8 +56,12 @@ class StockManger:
         self.item_list.append(item)
         self.item_list = self._sort_items(self.item_list)
     
-    def timeLeft(self):
-        return 
+    def timeLeft(self, item):
+        try:
+            slope = statistics.mean([item.history[time] - item.history[time - 1] for time in range(1, len(item.history))])
+            return (str(abs(1.0 * item.stock / slope)) if slope < 0 else "Infinite") + " time left"
+        except Exception as e:
+            print(e)
     
     
 
@@ -67,9 +71,17 @@ class Item():
         self.stock = s
         self.age = 0
         self.history = [self.stock]
+
     def time(self):
         age+=1
         self.history.append(self.stock)
+
+    def update(self, stock = None):
+        self.age+=1
+        if stock == None:
+            self.history.append(self.stock)
+        else:
+            self.history.append(stock)
 
 s = StockManger()
 s.add(Item("Chud Juice", 1))
@@ -80,4 +92,3 @@ for item in s.item_list:
     print(item.name)
 print()
 print(f"Seach term: \"s\"\nResult: {s.search("s").name}")
-
