@@ -59,12 +59,16 @@ class StockManger:
         self.item_list.append(item)
         self.item_list = self._sort_items(self.item_list)
     
-    def timeLeft(self, item):
+    def timeLeft(self, iName):
         try:
-            slope = statistics.mean([item.history[time] - item.history[time - 1] for time in range(1, len(item.history))])
-            return (str(abs(1.0 * item.stock / slope)) if slope < 0 else "Infinite") + " time left"
+            item = self.search(iName)
+            if item:
+                slope = statistics.mean([item.history[time] - item.history[time - 1] for time in range(1, len(item.history))])
+                return (str(abs(1.0 * item.stock / slope)) if slope < 0 else "Infinite") + " time left"
+            else:
+                return "Item not found."
         except Exception as e:
-            print(e)
+            return "Error. Has the item stock changed yet?"
     
 class Item:
 
@@ -73,10 +77,6 @@ class Item:
         self.stock = s
         self.age = 0
         self.history = [self.stock]
-
-    def time(self):
-        age+=1
-        self.history.append(self.stock)
 
     def update(self, stock = None):
         self.age+=1
@@ -89,10 +89,13 @@ s = StockManger()
 s.add(Item("Chud Juice", 1))
 s.add(Item("Chad Juice", 2))
 s.add(Item("Sigma Juice", 3))
-s.add(Item("Alpha juice", 0))
+s.add(Item("Alpha juice", 4))
 for item in s.item_list:
     print(item.name)
 print()
 print(f"Seach term: \"s\"\nResult: {s.search("s").name}")
+s.item_list[0].stock-=2
+s.item_list[0].update()
 for i in s.item_list:
     print(i.name + " " + str(i.history))
+print(s.timeLeft("Alph"))
