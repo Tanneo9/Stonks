@@ -1,6 +1,5 @@
 import statistics
 
-
 class StockManger:
     
     def __init__(self):
@@ -52,6 +51,10 @@ class StockManger:
                 index1 += 1
         return temp_list
     
+    def updateAll(self):
+        for i in s.item_list:
+            i.update()
+        
     def add(self, item):
         self.item_list.append(item)
         self.item_list = self._sort_items(self.item_list)
@@ -63,9 +66,8 @@ class StockManger:
         except Exception as e:
             print(e)
     
-    
+class Item:
 
-class Item():
     def __init__(self, n, s):
         self.name = n
         self.stock = s
@@ -92,3 +94,5 @@ for item in s.item_list:
     print(item.name)
 print()
 print(f"Seach term: \"s\"\nResult: {s.search("s").name}")
+for i in s.item_list:
+    print(i.name + " " + str(i.history))
