@@ -1,4 +1,5 @@
 import statistics
+import re
 
 class StockManger:
     
@@ -75,11 +76,9 @@ class Item:
     def __init__(self, n, s):
         self.name = n
         self.stock = s
-        self.age = 0
         self.history = [self.stock]
 
     def update(self, stock = None):
-        self.age+=1
         if stock == None:
             self.history.append(self.stock)
         else:
@@ -99,5 +98,24 @@ class Item:
 # for i in s.item_list:
 #     print(i.name + " " + str(i.history))
 # print(s.timeLeft("Alph"))
-with open('data.txt', 'a') as file:
-    file.write("\nNew entry: Alice, 30, Designers")
+with open('data.txt', 'w') as skibidi:
+    skibidi.write("""Sigma Juice:
+    Stock: 7
+    History = [6, 7, 6, 7]
+Beta Juice:
+    Stock: 1
+    History = [4, 1, 4, 1]
+
+Sigma Juice:
+    Stock: 7
+    History = [1, 2, 3, 4, 5, 6, 7, 6, 7]
+Mikael:
+    Stock: 0
+    History = [6, 7, 99999999999, 0]""")
+
+with open('data.txt', 'r') as sixseven:
+    content = sixseven.read()
+    blocks = re.split(r'\n{2,}', content)
+
+for i, block in enumerate(blocks):
+    print(f"Block {i + 1}:\n{block.strip()}\n")
