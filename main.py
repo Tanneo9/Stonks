@@ -19,11 +19,15 @@ class Item:
 class StockManger:
     
     def __init__(self) -> None:
-        self.item_list: List[Item] = []
+        self._item_list: List[Item] = []
+
+    @property
+    def item_list(self) -> List[Item]:
+        return self._sort_items(self._item_list)
     
     def search(self, search_term: str) -> Optional[Item]:
         low = 0
-        high = len(self.item_list) - 1
+        high = len(self._item_list) - 1
         while low <= high:
             mid = (low + high) // 2
             guess = self.item_list[mid]
@@ -37,7 +41,7 @@ class StockManger:
     
     def _sort_items(self, list: Optional[List[Item]] = None) -> List[Item]:
         if list is None:
-            list = self.item_list
+            list = self._item_list
 
         half1 = list[:int(len(list)/2):]
         half2 = list[int(len(list)/2)::]
@@ -68,12 +72,13 @@ class StockManger:
         return temp_list
     
     def updateAll(self) -> None:
-        for i in s.item_list:
+        for i in s._item_list:
             i.update()
         
     def add(self, item: Item) -> None:
-        self.item_list.append(item)
-        self.item_list = self._sort_items(self.item_list)
+        if item.stock < 0:
+            raise ValueError("Stock cannot be negative.")
+        self._item_list.append(item)
     
     def timeLeft(self, iName: str) -> str:
         try:
