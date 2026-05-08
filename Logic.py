@@ -85,17 +85,19 @@ class Item:
         else:
             self.history.append(stock)
 
-s = StockManger()
-s.add(Item("Chud Juice", 1))
-s.add(Item("Chad Juice", 2))
-s.add(Item("Sigma Juice", 3))
-s.add(Item("Alpha juice", 4))
-for item in s.item_list:
-    print(item.name)
-print()
-print(f"Seach term: \"s\"\nResult: {s.search("s").name}")
-s.item_list[0].stock-=2
-s.item_list[0].update()
-for i in s.item_list:
-    print(i.name + " " + str(i.history))
-print(s.timeLeft("Alph"))
+# s = StockManger()
+# s.add(Item("Chud Juice", 1))
+# s.add(Item("Chad Juice", 2))
+# s.add(Item("Sigma Juice", 3))
+# s.add(Item("Alpha juice", 4))
+# for item in s.item_list:
+#     print(item.name)
+# print()
+# print(f"Seach term: \"s\"\nResult: {s.search("s").name}")
+# s.item_list[0].stock-=2
+# s.item_list[0].update()
+# for i in s.item_list:
+#     print(i.name + " " + str(i.history))
+# print(s.timeLeft("Alph"))
+with open('data.txt', 'a') as file:
+    file.write("\nNew entry: Alice, 30, Designers")
