@@ -1,0 +1,35 @@
+[
+    {
+        "name": "Alpha juice",
+        "stock": 2,
+        "age": 1,
+        "history": [
+            4,
+            2
+        ]
+    },
+    {
+        "name": "Chad Juice",
+        "stock": 2,
+        "age": 0,
+        "history": [
+            2
+        ]
+    },
+    {
+        "name": "Chud Juice",
+        "stock": 1,
+        "age": 0,
+        "history": [
+            1
+        ]
+    },
+    {
+        "name": "Sigma Juice",
+        "stock": 3,
+        "age": 0,
+        "history": [
+            3
+        ]
+    }
+]
