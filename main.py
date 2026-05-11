@@ -1,21 +1,22 @@
 import statistics
+import re
 from typing import List, Optional
 import json
 
 class Item:
 
-    # creates item object with name, stock, age, and history of stock levels
-    def __init__(self, n: str, s: float, a: int = 0, h: Optional[List[float]] = None) -> None:
+    # creates item object with name, stock, and history of stock levels
+    def __init__(self, n: str, s: float, h: Optional[List[float]] = None) -> None:
         self.name: str = n
         self.stock: float = s
-        self.age: int = a
         self.history: List[float] = [self.stock]
 
-    # adds the stock to a history list which tracks the stock levels over time, and increases the age of the item by 1
+    # adds the stock to a history list which tracks the stock levels over time
     def update(self, stock: Optional[float] = None) -> None:
-        self.age+=1
         if stock == None:
             self.history.append(self.stock)
+        elif stock < 0:
+            print("Error trying to set a stock to a negative number.")
         else:
             self.history.append(stock)
 
@@ -95,34 +96,31 @@ class StockManger:
                 return "Item not found."
         except Exception as e:
             return "Error. Has the item stock changed yet?"
-    
-    # saves all items in the stock manager to a json file, and raises an exception if there is an error saving the data
-    def save(self) -> None:
-        try:
-            with open("stock_data.json", "w") as f:
-                items = [item.__dict__ for item in self.item_list]
-                json.dump(items, f, indent=4)
-        except Exception as e:
-            print(f"Error saving data: {e}")
 
-    # loads all items from a json file, and raises an exception if there is an error loading the data
-    def load(self) -> None:
-        try:
-            with open("stock_data.json", "r") as f:
-                items = json.load(f)
-                self._item_list = [Item(item["name"], item["stock"], item["age"], item["history"]) for item in items]
-        except Exception as e:
-            print(f"Error loading data: {e}")
-
+allManagers = []
+try: #loads data.txt and stops if it finds an error
+    with open('data.txt', 'r') as sixseven:
+        content = sixseven.read().strip()
+        for block in re.split(r'\n{2,}', content):
+            pot = StockManger()
+            items = [re.split(r'\n', block)[i*3:i*3+3] for i in range(int(len(re.split(r'\n', block))/3))]
+            for item in items:
+                pot.add(Item(item[0][:item[0].index(":")], int(item[1][item[1].index(": ")+2:]), [int(i) for i in re.split(r", ",item[2][item[2].index(": ")+3:-1])]))
+            allManagers.append(pot)
+except Exception as e:
+    allManagers = []
+    print("Invalid or no data.txt found (LOADING CANCELED).")
+print(len(allManagers))
 # creating stockmanager and adding data
 s = StockManger()
-# s.add(Item("Chud Juice", 1))
-# s.add(Item("Chad Juice", 2))
-# s.add(Item("Sigma Juice", 3))
-# s.add(Item("Alpha juice", 4))
-s.load()
+s.add(Item("Chud Juice", 1))
+s.add(Item("Chad Juice", 2))
+s.add(Item("Sigma Juice", 3))
+s.add(Item("Alpha juice", 4))
+allManagers.append(s)
 for item in s.item_list:
     print(item.name)
+
 
 # printing out a search result
 print()
@@ -136,36 +134,10 @@ for i in s.item_list:
     print(i.name + " " + str(i.history))
 print(s.timeLeft("Alph"))
 
-# s.save()
-
-
-
-# Do we use this, if not delete data.txt thats just a asset for testing
-
-# allManagers = []
-# try: #loads data.txt and stops if it finds an error
-#     with open('data.txt', 'r') as sixseven:
-#         content = sixseven.read().strip()
-#         for block in re.split(r'\n{2,}', content):
-#             pot = StockManger()
-#             items = [re.split(r'\n', block)[i*3:i*3+3] for i in range(int(len(re.split(r'\n', block))/3))]
-#             for item in items:
-#                 pot.add(Item(item[0][:item[0].index(":")], int(item[1][item[1].index(": ")+2:]), [int(i) for i in re.split(r", ",item[2][item[2].index(": ")+3:-1])]))
-#             allManagers.append(pot)
-# except Exception as e:
-#     allManagers = []
-#     print("Invalid or no data.txt found (LOADING CANCELED).")
-
-# # add and change managers here and make sure to add all managers to allManagers
-# for m in allManagers: 
-#     for i in m.item_list:
-#         print("Item: " + i.name + " Stock: " + str(i.stock) + " History: " + str(i.history))
-#     print("")
-
-# with open('data.txt', 'w') as skibidi: # Saves all managers into data.txt
-#     save = ""
-#     for m in allManagers:
-#         for i in m.item_list:
-#             save+=i.name + ":\n\tStock: " + str(i.stock) + "\n\tHistory: " + str(i.history) + "\n"
-#         save+=("\n")
-#     skibidi.write(save)
+with open('data.txt', 'w') as skibidi: # Saves all managers into data.txt
+    save = ""
+    for m in allManagers:
+        for i in m.item_list:
+            save+=i.name + ":\n\tStock: " + str(i.stock) + "\n\tHistory: " + str(i.history) + "\n"
+        save+=("\n")
+    skibidi.write(save)
