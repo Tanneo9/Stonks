@@ -1,0 +1,21 @@
+Beta Juice:
+	Stock: 1
+	History: [4, 1, 4, 1]
+Diddy Juice:
+	Stock: 7
+	History: [6, 7, 6, 7]
+
+Mikael:
+	Stock: 0
+	History: [6, 7, 99999999999, 0]
+Sigma Juice:
+	Stock: 7
+	History: [1, 2, 3, 4, 5, 6, 7, 6, 7]
+
+Skidibi Juice:
+	Stock: 7
+	History: [1, 2, 3, 4, 5, 6, 7, 6, 7]
+TUNTUNGTUNSAHUR:
+	Stock: 9
+	History: [7, 8, 9]
+

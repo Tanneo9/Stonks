@@ -137,3 +137,35 @@ for i in s.item_list:
 print(s.timeLeft("Alph"))
 
 # s.save()
+
+
+
+# Do we use this, if not delete data.txt thats just a asset for testing
+
+# allManagers = []
+# try: #loads data.txt and stops if it finds an error
+#     with open('data.txt', 'r') as sixseven:
+#         content = sixseven.read().strip()
+#         for block in re.split(r'\n{2,}', content):
+#             pot = StockManger()
+#             items = [re.split(r'\n', block)[i*3:i*3+3] for i in range(int(len(re.split(r'\n', block))/3))]
+#             for item in items:
+#                 pot.add(Item(item[0][:item[0].index(":")], int(item[1][item[1].index(": ")+2:]), [int(i) for i in re.split(r", ",item[2][item[2].index(": ")+3:-1])]))
+#             allManagers.append(pot)
+# except Exception as e:
+#     allManagers = []
+#     print("Invalid or no data.txt found (LOADING CANCELED).")
+
+# # add and change managers here and make sure to add all managers to allManagers
+# for m in allManagers: 
+#     for i in m.item_list:
+#         print("Item: " + i.name + " Stock: " + str(i.stock) + " History: " + str(i.history))
+#     print("")
+
+# with open('data.txt', 'w') as skibidi: # Saves all managers into data.txt
+#     save = ""
+#     for m in allManagers:
+#         for i in m.item_list:
+#             save+=i.name + ":\n\tStock: " + str(i.stock) + "\n\tHistory: " + str(i.history) + "\n"
+#         save+=("\n")
+#     skibidi.write(save)
